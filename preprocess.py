@@ -2,13 +2,13 @@ import pandas as pd
 import os
 import datetime
 
-SPLITS = ['train', 'test']
+SPLITS = ['train', 'valid']
 TIMEZONES = {
     'train':{
         'start': datetime.datetime(2017,3,29,12,0,0),
         'end': datetime.datetime(2017,7,23,15,0,0)
     },
-    'test':{
+    'valid':{
         'start': datetime.datetime(2017,7,23,3,0,0),
         'end': datetime.datetime(2017,9,9,23,0,0)}
     }
@@ -37,7 +37,7 @@ def main():
         for split in SPLITS:
             dfs[split] = dfs[split].drop('datetime', axis=1)
             dfs[split].to_csv(saved_path[split], index=False)
-    print("****** Generate Train Test Data in ./data/ ******")
+    print("****** Generate Train/Valid Data in ./data/ ******")
 
 if __name__ == '__main__':
     main()
