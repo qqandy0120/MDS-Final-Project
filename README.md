@@ -1,6 +1,18 @@
 # MDS Final Project
 
-## Download Environment and Package
+## Clone Project
+```bash
+git clone https://github.com/qqandy0120/MDS-Final-Project.git
+cd MDS-Final-Project
+```
+
+## [Optinal] Create Conda Environment
+```bash
+conda create -n MDSenv python=3.8
+conda activate MDSenv
+```
+
+## Install Package
 ```bash
 pip install -r requirements.in
 ```
@@ -14,7 +26,7 @@ bash download.sh
 ```bash
 python train.py
 ```
-### Tune hparameters as you want!
+### or Tune hparameters as you want!
 #### for example:
 ```bash
 python train.py --exp_name myexp --time_step 10
