@@ -33,7 +33,7 @@ def get_opts():
     parser.add_argument(
         '--bidirectional',
         type=bool,
-        default=True,
+        default=False,
     )
 
     # trainging hparams
