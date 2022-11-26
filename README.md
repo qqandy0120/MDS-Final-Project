@@ -19,5 +19,5 @@ python train.py
 ```bash
 python train.py --exp_name myexp --time_step 10
 ```
-#### you can check all hyperparameters in opt.py
+#### you can check all hyperparameters in [opt.py](https://github.com/qqandy0120/MDS-Final-Project/blob/main/opt.py)
 ## HAVE FUN!
