@@ -1,0 +1,8 @@
+# requirements
+wget
+torch==1.12.1
+tensorflow==2.10.0
+tqdm
+numpy
+pandas
+pytorch-lightning
