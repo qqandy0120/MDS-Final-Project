@@ -21,7 +21,7 @@ pip install -r requirements.in
 ```bash
 bash download.sh
 ```
-### if wget: command not found, try:
+### if **wget: command not found**, try:
 ```bash
 conda install wget
 ```
