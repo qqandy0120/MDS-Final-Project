@@ -30,12 +30,6 @@ def get_opts():
         type=int,
         default=256,
     )
-    parser.add_argument(
-        '--bidirectional',
-        type=bool,
-        default=False,
-    )
-
     # trainging hparams
     parser.add_argument(
         '--lr',

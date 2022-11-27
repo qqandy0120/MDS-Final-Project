@@ -8,22 +8,22 @@ class GRUPuritiesPredictor(nn.Module):
         hidden_size: int = 512,
         num_layers: int = 3,
         batch_size: int = 256,
-        bidirectional: bool = False,
     ) -> None:
         super().__init__()
 
         self.pred_cnt = 2
-        self.h0 = torch.zeros(num_layers * (1+bidirectional), batch_size, hidden_size)
+        self.bidirectional = False
+        self.h0 = torch.zeros(num_layers * (1+self.bidirectional), batch_size, hidden_size)
         self.lstm = nn.GRU(
             input_size=feature_cnt,
             hidden_size=hidden_size,
             num_layers=num_layers,
             batch_first=True,
-            bidirectional=bidirectional,
+            bidirectional=self.bidirectional,
         )
 
         self.fc = nn.Linear(
-            in_features=hidden_size * (1 + bidirectional),
+            in_features=hidden_size * (1 + self.bidirectional),
             out_features=self.pred_cnt
         )
     
