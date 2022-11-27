@@ -28,7 +28,7 @@ def main():
         filter = {split: (df['datetime'] >= TIMEZONES[split]['start']) & 
             (df['datetime'] <= TIMEZONES[split]['end']) &
             (df['datetime'].dt.second == 0) & 
-            (df['datetime'].dt.minute % 2 == 0) for split in SPLITS}
+            (df['datetime'].dt.minute == 0) for split in SPLITS}
 
         dfs = {split: df.loc[filter[split]] for split in SPLITS}
 
@@ -38,6 +38,8 @@ def main():
             dfs[split] = dfs[split].drop('datetime', axis=1)
             dfs[split].to_csv(saved_path[split], index=False)
     print("****** Generate Train/Valid Data in ./data/ ******")
+    print(f"{'Training':<10} Data: {len(dfs['train']):>8}")
+    print(f"{'Validation':<10} Data: {len(dfs['valid']):>8}")
 
 if __name__ == '__main__':
     main()
