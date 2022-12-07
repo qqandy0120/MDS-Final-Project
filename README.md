@@ -31,6 +31,9 @@ bash download.sh
 ```
 again
 
+or you can just download data from [here](https://www.dropbox.com/s/oim8d8dnl2r3p8s/Flotation_Plant_preprocessed.csv?dl=0)
+and put it in ./MDS-Final-Project/data/Flotation_Plant_preprocessed.csv
+
 ## Start Training!
 ### Training model with default parameters...
 ```bash
