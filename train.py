@@ -18,7 +18,7 @@ import torch.nn as nn
 from pytorch_lightning import LightningModule, Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint, TQDMProgressBar
 from pytorch_lightning.callbacks.early_stopping import EarlyStopping
-from pytorch_lightning.loggers import TensorBoardLogger
+from pytorch_lightning.loggers import WandbLogger
 
 class PuritiesPredModule(LightningModule):
     def __init__(self, hparams):
@@ -30,7 +30,6 @@ class PuritiesPredModule(LightningModule):
             hidden_size=self.hparams.hidden_size,
             num_layers=self.hparams.num_layers,
             batch_size=self.hparams.batch_size,
-            bidirectional=self.hparams.bidirectional
         )
     
     def forward(self, input):
@@ -78,7 +77,8 @@ class PuritiesPredModule(LightningModule):
         preds = self(batch['feature'])
         criterion = nn.MSELoss()
         loss = criterion(preds, batch['label'])
-        self.log('train/loss', loss, prog_bar=True)
+        
+        self.log('val/loss', loss, prog_bar=True)
         return loss
     def validation_epoch_end(self, outputs):
         # calculate average loss
@@ -99,22 +99,25 @@ if __name__ == '__main__':
         mode='min',
         save_top_k=3,
     )
-    early_stop = EarlyStopping(monitor='val/loss', mode='min', min_delta=0.01, patience=hparams.patience)
+    early_stop = EarlyStopping(monitor='val/loss', mode='min', patience=hparams.patience)
     pbar = TQDMProgressBar(refresh_rate=1)  # show progress bar in terminal
-    callbacks = [ckpt_cb, pbar, early_stop]
+    callbacks = [ckpt_cb, early_stop, pbar]
 
-    logger = TensorBoardLogger(save_dir=hparams.log_dir,
-                               name=hparams.exp_name,
-                               default_hp_metric=False)
+    logger = WandbLogger(
+        save_dir=hparams.log_dir,
+        name=hparams.exp_name,
+    )
 
-    trainer = Trainer(max_epochs=hparams.num_epochs,
-                      callbacks=callbacks,
-                      logger=logger,
-                      enable_model_summary=True,
-                      accelerator='auto',  # gpu? cpu? tpu?
-                      devices=1,
-                      num_sanity_val_steps=1,  # run validation step first to check correctness
-                      benchmark=True)
+    trainer = Trainer(
+        max_epochs=hparams.num_epochs,
+        callbacks=callbacks,
+        logger=logger,
+        enable_model_summary=True,
+        accelerator='auto',  # gpu? cpu? tpu?
+        devices=1,
+        num_sanity_val_steps=1,  # run validation step first to check correctness
+        benchmark=True,
+    )
 
     trainer.fit(module)
 

@@ -12,9 +12,10 @@ class GRUPuritiesPredictor(nn.Module):
         super().__init__()
 
         self.pred_cnt = 2
+        self.hidden_size = hidden_size
+        self.num_layers = num_layers
         self.bidirectional = False
-        self.h0 = torch.zeros(num_layers * (1+self.bidirectional), batch_size, hidden_size)
-        self.lstm = nn.GRU(
+        self.gru = nn.GRU(
             input_size=feature_cnt,
             hidden_size=hidden_size,
             num_layers=num_layers,
@@ -28,7 +29,9 @@ class GRUPuritiesPredictor(nn.Module):
         )
     
     def forward(self, input):
-        output, _ = self.lstm(input, self.h0.detach())
+        h0 = torch.zeros(self.num_layers * (1 + self.bidirectional), input.shape[0], self.hidden_size)
+        h0 = h0.to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
+        output, _ = self.gru(input, h0.detach())
         output = output[:, -1, :]
         output = self.fc(output)
         return output

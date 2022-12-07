@@ -44,8 +44,8 @@ class FlotationDataset(Dataset):
 
 
 if __name__ == '__main__':
-    # dataset = FlotationDataset(split='train', time_step=6)
-    # print(dataset[0]['feature'])
-    # print(dataset[0]['label'])
-    # print(len(dataset))
+    dataset = FlotationDataset(split='valid', time_step=6)
+    print(dataset[0]['feature'].shape)
+    print(dataset[0]['label'])
+    print(len(dataset))
     pass
