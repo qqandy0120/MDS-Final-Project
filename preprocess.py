@@ -6,7 +6,7 @@ SPLITS = ['train', 'valid']
 TIMEZONES = {
     'train':{
         'start': datetime.datetime(2017,3,29,12,0,0),
-        'end': datetime.datetime(2017,7,23,15,0,0)
+        'end': datetime.datetime(2017,7,23,3,0,0)
     },
     'valid':{
         'start': datetime.datetime(2017,7,23,3,0,0),
