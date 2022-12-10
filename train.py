@@ -29,7 +29,6 @@ class PuritiesPredModule(LightningModule):
             feature_cnt=self.hparams.feature_cnt,
             hidden_size=self.hparams.hidden_size,
             num_layers=self.hparams.num_layers,
-            batch_size=self.hparams.batch_size,
         )
     
     def forward(self, input):
@@ -120,5 +119,3 @@ if __name__ == '__main__':
     )
 
     trainer.fit(module)
-
-

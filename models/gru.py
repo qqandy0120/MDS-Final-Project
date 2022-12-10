@@ -7,11 +7,10 @@ class GRUPuritiesPredictor(nn.Module):
         feature_cnt: int = 21,
         hidden_size: int = 512,
         num_layers: int = 3,
-        batch_size: int = 256,
     ) -> None:
         super().__init__()
 
-        self.pred_cnt = 2
+        self.pred_cnt = 1
         self.hidden_size = hidden_size
         self.num_layers = num_layers
         self.bidirectional = False

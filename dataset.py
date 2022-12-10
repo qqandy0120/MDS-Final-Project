@@ -29,9 +29,9 @@ class FlotationDataset(Dataset):
     
     def __getitem__(self, index):
         features = self.df.iloc[index:index+self.time_step, :-2]
-        labels = self.df.iloc[index+self.time_step, -2:]
+        labels = self.df.iloc[index+self.time_step, -1]
         features_tensor = torch.tensor(features.values).to(torch.float32)
-        labels_tensor = torch.tensor(labels.values).to(torch.float32)
+        labels_tensor = torch.tensor(labels).to(torch.float32)
         return{
             'feature': features_tensor,
             'label': labels_tensor,

@@ -26,7 +26,7 @@ def main():
         df.iloc[:,0:-1] = df.iloc[:,0:-1].apply(lambda x: round((x-x.min())/ (x.max()-x.min()),3), axis=0)
 
         filter = {split: (df['datetime'] >= TIMEZONES[split]['start']) & 
-            (df['datetime'] <= TIMEZONES[split]['end']) &
+            (df['datetime'] < TIMEZONES[split]['end']) &
             (df['datetime'].dt.second == 0) & 
             (df['datetime'].dt.minute == 0) for split in SPLITS}
 
