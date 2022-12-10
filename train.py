@@ -50,7 +50,7 @@ class PuritiesPredModule(LightningModule):
     def val_dataloader(self):
         return DataLoader(
             self.valid_dataset,
-            shuffle=True,
+            shuffle=False,
             batch_size=self.hparams.batch_size
         )
     
@@ -103,12 +103,14 @@ if __name__ == '__main__':
     callbacks = [ckpt_cb, early_stop, pbar]
 
     logger = WandbLogger(
+        project="MDS-Final-Project",
         save_dir=hparams.log_dir,
         name=hparams.exp_name,
     )
 
     trainer = Trainer(
         max_epochs=hparams.num_epochs,
+        log_every_n_steps=11,
         callbacks=callbacks,
         logger=logger,
         enable_model_summary=True,
