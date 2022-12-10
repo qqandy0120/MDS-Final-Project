@@ -83,6 +83,10 @@ class PuritiesPredModule(LightningModule):
         # calculate average loss
         mean_loss = torch.stack([loss for loss in outputs]).mean()
         self.log('val/loss', mean_loss, prog_bar=True)
+    # for inference
+    def predict_step(self, batch, batch_idx: int):
+        preds = self(batch['feature'])
+        return preds
 
 if __name__ == '__main__':
     hparams = get_opts()
