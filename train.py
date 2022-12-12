@@ -76,7 +76,6 @@ class PuritiesPredModule(LightningModule):
         preds = self(batch['feature'])
         criterion = nn.MSELoss()
         loss = criterion(preds, batch['label'])
-        
         self.log('val/loss', loss, prog_bar=True)
         return loss
     def validation_epoch_end(self, outputs):
