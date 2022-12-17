@@ -2,4 +2,4 @@ data/
 ckpts/
 logs/
 lightning_logs/
-__pycache__/
+test.py

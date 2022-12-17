@@ -13,7 +13,7 @@ def get_opts():
     parser.add_argument(
         '--feature_cnt',
         type=int,
-        default=21,
+        default=22,
     )
     parser.add_argument(
         '--hidden_size',
@@ -54,7 +54,7 @@ def get_opts():
     parser.add_argument(
         '--scheduler',
         type=str,
-        default='StepLR'
+        default='StepLR',
     )
     parser.add_argument(
         '--patience',

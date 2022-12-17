@@ -23,7 +23,7 @@ def main():
         # drop date column
         df = df.drop('date', axis=1)
         # normalize feature
-        df.iloc[:,0:-1] = df.iloc[:,0:-1].apply(lambda x: round((x-x.min())/ (x.max()-x.min()),3), axis=0)
+        df.iloc[:,0:-2] = df.iloc[:,0:-2].apply(lambda x: round((x-x.min())/ (x.max()-x.min()),3), axis=0)
 
         filter = {split: (df['datetime'] >= TIMEZONES[split]['start']) & 
             (df['datetime'] < TIMEZONES[split]['end']) &
@@ -36,6 +36,7 @@ def main():
         
         for split in SPLITS:
             dfs[split] = dfs[split].drop('datetime', axis=1)
+            dfs[split] = dfs[split].drop('% Iron Concentrate', axis=1)
             dfs[split].to_csv(saved_path[split], index=False)
     print("****** Generate Train/Valid Data in ./data/ ******")
     print(f"{'Training':<10} Data: {len(dfs['train']):>8}")

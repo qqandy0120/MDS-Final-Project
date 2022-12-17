@@ -28,7 +28,7 @@ class FlotationDataset(Dataset):
         return len(self.df) - self.time_step
     
     def __getitem__(self, index):
-        features = self.df.iloc[index:index+self.time_step, :-2]
+        features = self.df.iloc[index:index+self.time_step, :]
         labels = self.df.iloc[index+self.time_step, -1]
         features_tensor = torch.tensor(features.values).to(torch.float32)
         labels_tensor = torch.tensor([labels]).to(torch.float32)
@@ -48,5 +48,6 @@ if __name__ == '__main__':
     print(len(train))
     valid = FlotationDataset(split='valid', time_step=6)
     print(len(valid))
-    print(valid[0]['label'].shape)
+    print(valid[0]['feature'].shape)
+    print(valid[0]['label'])
     pass

@@ -4,7 +4,7 @@ import torch.nn as nn
 class GRUPuritiesPredictor(nn.Module):
     def __init__(
         self,
-        feature_cnt: int = 21,
+        feature_cnt: int = 22,
         hidden_size: int = 512,
         num_layers: int = 3,
     ) -> None:

@@ -15,6 +15,8 @@ def main(args):
     dict = {'label': labels, 'prediction': predictions}
     df = pd.DataFrame(dict)
     df.to_csv(f'{args.ckpt_dir.split(".")[0]}_output.csv', index=False)
+    ax = df.plot.line()
+    ax.figure.savefig(f'{args.ckpt_dir.split(".")[0]}_output.png')
 
 def arg_parse():
     parser = argparse.ArgumentParser()

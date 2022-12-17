@@ -60,9 +60,13 @@ class PuritiesPredModule(LightningModule):
             self.net.parameters(),
             lr=self.hparams.lr
         )
-        scheduler = getattr(lr_scheduler, self.hparams.scheduler)(optimizer, step_size=1)
+        # if self.hparams.scheduler is not None:
+        #     scheduler = getattr(lr_scheduler, self.hparams.scheduler)(optimizer, step_size=1)
+        # else:
+        #     scheduler = None
+        # scheduler = None
 
-        return [optimizer], [scheduler]
+        return [optimizer], []
     
     # training/validation step
     def training_step(self, batch, batch_idx):
