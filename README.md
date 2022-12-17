@@ -49,4 +49,10 @@ python train.py
 python train.py --exp_name myexp --time_step 10
 ```
 #### you can check all hyperparameters in [opt.py](https://github.com/qqandy0120/MDS-Final-Project/blob/main/opt.py)
+
+## How to see prediction?
+```bash
+python inference.py --ckpt_dir path/to/model/ckpt
+```
+then the predcition(including a csv and png) will be saved under ckpt_dir/{model_dir}/..
 ## HAVE FUN!
