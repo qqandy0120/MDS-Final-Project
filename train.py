@@ -26,7 +26,7 @@ class PuritiesPredModule(LightningModule):
         self.save_hyperparameters(hparams)  # call hparams to self
 
         self.net = GRUPuritiesPredictor(
-            feature_cnt=self.hparams.feature_cnt,
+            feature_cnt=22 if self.hparams.mode=='normal' else 1,
             hidden_size=self.hparams.hidden_size,
             num_layers=self.hparams.num_layers,
         )
@@ -37,8 +37,8 @@ class PuritiesPredModule(LightningModule):
     
     # set up dataset
     def setup(self, stage=None):
-        self.train_dataset = FlotationDataset('train', self.hparams.time_step)
-        self.valid_dataset = FlotationDataset('valid', self.hparams.time_step) 
+        self.train_dataset = FlotationDataset('train', self.hparams.time_step, self.hparams.mode)
+        self.valid_dataset = FlotationDataset('valid', self.hparams.time_step, self.hparams.mode) 
 
     # pack up dataloader
     def train_dataloader(self):

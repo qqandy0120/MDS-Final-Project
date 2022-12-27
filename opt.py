@@ -2,6 +2,14 @@ import argparse
 from pathlib import Path
 def get_opts():
     parser = argparse.ArgumentParser()
+
+    # mode
+    parser.add_argument(
+        '--mode',
+        type=str,
+        default='normal',
+    )
+
     # dataset hparam
     parser.add_argument(
         '--time_step',
@@ -10,11 +18,6 @@ def get_opts():
     )
 
     # model hparams
-    parser.add_argument(
-        '--feature_cnt',
-        type=int,
-        default=22,
-    )
     parser.add_argument(
         '--hidden_size',
         type=int,

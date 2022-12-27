@@ -7,18 +7,21 @@ from pathlib import Path
 import torch
 from torch.utils.data import Dataset
 SPLITS = ['train', 'valid']
-
+MODES = ['normal', 'y_only']
 
 class FlotationDataset(Dataset):
     def __init__(
         self,
         split: str,
         time_step: int = 6,
+        mode: str = 'normal',
     ):
-        assert split in SPLITS, f'split should be in {SPLITS}'
+        assert split in SPLITS, f'split should be one of {SPLITS}'
+        assert mode in MODES, f'mode should be one of {MODES}'
 
         self.split = split
         self.time_step = time_step
+        self.mode = mode
 
         self.df = pd.read_csv(os.path.join('data', f"{split}.csv"))
     
@@ -28,7 +31,10 @@ class FlotationDataset(Dataset):
         return len(self.df) - self.time_step
     
     def __getitem__(self, index):
-        features = self.df.iloc[index:index+self.time_step, :]
+        if self.mode == 'normal':
+            features = self.df.iloc[index:index+self.time_step, :]
+        if self.mode == 'y_only':
+            features = self.df.iloc[index:index+self.time_step, -1]
         labels = self.df.iloc[index+self.time_step, -1]
         features_tensor = torch.tensor(features.values).to(torch.float32)
         labels_tensor = torch.tensor([labels]).to(torch.float32)
@@ -44,10 +50,10 @@ class FlotationDataset(Dataset):
 
 
 if __name__ == '__main__':
-    train = FlotationDataset(split='train', time_step=6)
+    train = FlotationDataset(split='train',  mode='y_only')
     print(len(train))
-    valid = FlotationDataset(split='valid', time_step=6)
+    valid = FlotationDataset(split='valid', mode='y_only')
     print(len(valid))
-    print(valid[0]['feature'].shape)
+    print(valid[0]['feature'])
     print(valid[0]['label'])
     pass
