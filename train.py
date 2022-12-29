@@ -19,14 +19,18 @@ from pytorch_lightning import LightningModule, Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint, TQDMProgressBar
 from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 from pytorch_lightning.loggers import WandbLogger
-
+MODES = ['normal', 'y_only']
 class PuritiesPredModule(LightningModule):
     def __init__(self, hparams):
         super().__init__()
         self.save_hyperparameters(hparams)  # call hparams to self
+        
+        assert self.hparams.mode in MODES, f'mode should be one of {MODES}!'
+
+        self.feature_cnt = 22 if self.hparams.mode=='normal' else 1
 
         self.net = GRUPuritiesPredictor(
-            feature_cnt=22 if self.hparams.mode=='normal' else 1,
+            feature_cnt=self.feature_cnt,
             hidden_size=self.hparams.hidden_size,
             num_layers=self.hparams.num_layers,
         )

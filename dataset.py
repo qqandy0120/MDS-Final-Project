@@ -39,7 +39,7 @@ class FlotationDataset(Dataset):
         features_tensor = torch.tensor(features.values).to(torch.float32)
         labels_tensor = torch.tensor([labels]).to(torch.float32)
         return{
-            'feature': features_tensor,
+            'feature': features_tensor.view(6, -1),
             'label': labels_tensor,
         }
 
